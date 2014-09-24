@@ -1,0 +1,7 @@
+{
+  "name": "guides demo",
+  "private": true,
+  "dependencies": {
+    "guides": "*"
+  }
+}

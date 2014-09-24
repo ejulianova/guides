@@ -1,0 +1,42 @@
+{
+  "name": "guides",
+  "authors": [
+    "Elena Petrova <elena.julianova@gmail.com>"
+  ],
+  "description": "Interactive Javascript library for making guided webside tours.",
+  "main": "dist/guides.js",
+  "keywords": [
+    "guides",
+    "guiders",
+    "guided",
+    "tours",
+    "jquery",
+    "plugin",
+    "helpers",
+    "welcome",
+    "tour"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "demo",
+    "src",
+    "test",
+    "Gruntfile.js",
+    "package.json",
+    "*.md"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  },
+  "homepage": "https://github.com/epetrova/guides",
+  "_release": "996886ba58",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "996886ba58ec000acb9af73b55cbfca1c77d5efe"
+  },
+  "_source": "git://github.com/epetrova/guides.git",
+  "_target": "*",
+  "_originalSource": "guides"
+}
