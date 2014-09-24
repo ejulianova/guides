@@ -1,0 +1,27 @@
+{
+  "name": "guides.js",
+  "version": "0.0.0",
+  "description": "lightweight javascript library for making guided webside tours",
+  "main": "guides.js",
+  "dependencies": {
+    "karma": "~0.12.23"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-jasmine": "~0.7.0",
+    "grunt-contrib-uglify": "~0.5.1",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "guided",
+    "tours",
+    "jquery",
+    "plugin"
+  ],
+  "author": "Elena Petrova",
+  "license": "BSD-2-Clause"
+}
