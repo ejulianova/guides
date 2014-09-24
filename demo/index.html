@@ -2,11 +2,11 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>jQuery.helpers</title>
+	<title>guides.js</title>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="screen.css">
-	<link rel="stylesheet" type="text/css" href="..\dist\guides.css">
+	<link rel="stylesheet" type="text/css" href="../dist/guides.css">
 </head>
 <body>
 	<nav class="navbar navbar-default" role="navigation">
@@ -30,7 +30,7 @@
 	        <li><a href="#download">download</a></li>
 	      </ul>
 	      <p class="navbar-btn navbar-right">
-	      	<button id="demo" type="button" class="btn btn-success">Start demo</button>
+	      	<button type="button" id="demo" class="demo btn btn-success">Start demo</button>
 	      </p>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
@@ -38,35 +38,36 @@
 
 	<div role="main" class="container">
 		<div class="page-header">
-		  <h1>Guides.js <small>lightweight javascript library for making guided webside tours</small></h1>
+		  <h1>Guides.js <small>lightweight javascript library for making guided website tours</small></h1>
 		</div>
 		<p>Guides.js finds the element you want to highlight, creates a guide element using the html you specified in the configuration options and connects the guide and the highlighted element with an svg arrow.</p>
+		<p><button type="button" class="demo btn btn-success">Start demo</button></p>
 		<p><img src="http://i.gyazo.com/c03b02c7bbc24b7e9bdb8e620df20cf7.png" class="img-thumbnail" /></p>
 		<h3 id="getting-started">Getting Started</h3>
 		<section>
-		<p>Once you have downloaded the source, simply include <em>guides.css</em> in the <kbd>&lt;head&gt;</kbd> your document:</p>
+		<p>Once you have downloaded the source, simply include <em>guides.css</em> in the <kbd>&lt;head&gt;</kbd> of your page:</p>
 		<p><pre>&lt;head&gt
 	...
 	&lt;link rel="stylesheet" type="text/css" href="guides.css" &gt;
 &lt;/head&gt</pre></p>
-		<p>and the <em>guides.js</em> to your scripts section. Make sure you include it after <em>jquery</em>:</p>
+		<p>and <em>guides.js</em> in your page scripts section. Make sure you include it after <em>jquery</em>:</p>
 		<p><pre>	...
 	&lt;script type="text/javascript" src="jquery.js" &gt;
 	&lt;script type="text/javascript" src="guides.js" &gt;
 &lt;/body&gt</pre></p>
-		<p>Note that you can import <em>guides.scss</em> and compile togerther with your websitse stylesheet if you are using sass.</p>
+		<p>Note that you can import <em>guides.scss</em> and compile it togerther with your website styles if you are using sass.</p>
 		</section>
 		<h3 id="docs">Docs</h3>
 		<section>
 			<h4>Dependencies</h4>
-			<p><em>Guides.js</em> depends on jquery, so you need to make sure you include jquery first.</p>
+			<p><em>Guides.js</em> depends on <b>jquery</b>, so you need to make sure you include jquery first.</p>
 			<h4>Initialization</h4>
-			<p><em>Guides.js</em> is a jquery plugin so it can be initialized on an element, that will "trigger" the guided tour:</p>
+			<p><em>Guides.js</em> is a jquery plugin and it can be initialized on an element, that will "trigger" the guided tour:</p>
 			<p><pre>
-$('#'demo'').guides({
+$('#demo').guides({
 	tips: tips
 });</pre></p>
-			<p>Now the tour will start everytime <kbd>$('#'demo'')</kbd> element is clicked.</p>
+			<p>Now the tour will start everytime <kbd>$('#demo')</kbd> element is clicked.</p>
 			<h4>Configuration options</h4>
 			<h5>The default options are as follows:</h5>
 			<p><pre>
@@ -79,7 +80,7 @@ $('#'demo'').guides({
 				<dt>distance</dt>
 				<dd><em>number</em> - distance between the guide text and the element that it is related to.</dd>
 				<dt>color</dt>
-				<dd><em>string</em> - the guides arrows and text default color</dd>
+				<dd><em>string</em> - arrows and text default color</dd>
 				<dt>guides</dt>
 				<dd><em>array of objects</em> - the list of guides</dd>
 			</dl>
@@ -96,52 +97,50 @@ $('#'demo'').guides({
 				<dt>html</dt>
 				<dd><span class="label label-danger">required</span> <em>string</em> - this is the content of the tip: you can enter plain text or markup</dd>
 				<dt>color</dt>
-				<dd><span class="label label-default">optional</span> <em>string</em> - the guide arrow and text color (falls back to the default color if not specified)</dd>
+				<dd><span class="label label-default">optional</span> <em>string</em> - arrow and text color (falls back to the default color if not specified)</dd>
 			</dl>
 			<h4>Methods</h4>
 			<dl class="dl-horizontal">
 				<dt>start</dt>
-				<dd><kbd>$('#'demo'').guides("start");</kbd> Starts the guided tour.</dd>
+				<dd><kbd>$('#demo').guides('start');</kbd> Starts the guided tour.</dd>
 				<dt>end</dt>
-				<dd><kbd>$('#'demo'').guides("end");</kbd> Exits the guided tour.</dd>
+				<dd><kbd>$('#demo').guides('end');</kbd> Exits the guided tour.</dd>
 				<dt>next</dt>
-				<dd><kbd>$('#'demo'').guides("next");</kbd> Moves to the next guide.</dd>
+				<dd><kbd>$('#demo').guides('next');</kbd> Moves to the next guide.</dd>
 				<dt>prev</dt>
-				<dd><kbd>$('#'demo'').guides("prev");</kbd> Moves back to the previous guide.</dd>
+				<dd><kbd>$('#demo').guides('prev');</kbd> Moves back to the previous guide.</dd>
 				<dt>destroy</dt>
-				<dd><kbd>$('#'demo'').guides("destroy");</kbd> Exits the guided tour and destroys it.</dd>
+				<dd><kbd>$('#demo').guides('destroy');</kbd> Exits the guided tour and destroys it.</dd>
 				<dt>setOptions</dt>
-				<dd><kbd>$('#'demo'').guides("setOptions", options);</kbd> Extends the guides configuration options with the options sent as a second parameter.</dd>					
+				<dd><kbd>$('#demo').guides('setOptions', options);</kbd> Extends the guides configuration options with the options sent as a second parameter.</dd>
 			</dl>
 			<h4>Events</h4>
 			<dl class="dl-horizontal">
 				<dt>start</dt>
-				<dd><kbd>$('#'demo'').guides({start: onStartFunction});</kbd> Called after the tour starts.</dd>
+				<dd><kbd>$('#demo').guides({start: onStartFunction});</kbd> Called after the tour starts.</dd>
 				<dt>end</dt>
-				<dd><kbd>$('#'demo'').guides({end: onEndFunction});</kbd> Called after the tour ends.</dd>
+				<dd><kbd>$('#demo').guides({end: onEndFunction});</kbd> Called after the tour ends.</dd>
 				<dt>next</dt>
-				<dd><kbd>$('#'demo'').guides({next: onNextFunction});</kbd> Called after showing the next guide.</dd>
+				<dd><kbd>$('#demo').guides({next: onNextFunction});</kbd> Called after showing the next guide.</dd>
 				<dt>prev</dt>
-				<dd><kbd>$('#'demo'').guides({prev: onPrevFunction});</kbd> Called after showing the previous guide.</dd>
+				<dd><kbd>$('#demo').guides({prev: onPrevFunction});</kbd> Called after showing the previous guide.</dd>
 				<dt>destroy</dt>
-				<dd><kbd>$('#'demo'').guides({destroy: onDestroyFunction});</kbd> Called after destroying.</dd>	
+				<dd><kbd>$('#demo').guides({destroy: onDestroyFunction});</kbd> Called after destroying.</dd>
 			</dl>
 		</section>
 		<h3 id="download">Download</h3>
 		<section>
-			The source is availabe on github: https://github.com/epetrova/guides/:
-			<p><pre>git glone https://github.com/epetrova/guides.git</pre></p>
-<!-- 			Alternatively, you can install using Bower:
-			<p><pre>bower install guides</pre></p> -->
+			The source is availabe on github: <a href="https://github.com/epetrova/guides/">https://github.com/epetrova/guides/</a>:
+			<p><pre>git clone https://github.com/epetrova/guides.git</pre></p>
+ 			Alternatively, you can install using Bower:
+			<p><pre>bower install guides</pre></p>
 		</section>
 	</div>
-	<script type="text/javascript" src="..\bower_components\jquery\dist\jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="..\dist\guides.js"></script>
-	<!--<script type="text/javascript" src="..\dist\guides.min.js"></script>
-	<script type="text/html" src="..\dist\guides.min.js.map"></script>-->
+	<script type="text/javascript" src="../dist/guides.min.js"></script>
 	<script type="text/javascript">
-		$('#demo').guides({
+		$('.demo').guides({
 			guides: [{
 				element: $('.navbar-brand'),
 				html: 'Welcome to Guides.js'

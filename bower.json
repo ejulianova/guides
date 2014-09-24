@@ -1,11 +1,11 @@
 {
   "name": "guides",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "authors": [
     "Elena Petrova <elena.julianova@gmail.com>"
   ],
   "description": "Interactive Javascript library for making guided webside tours.",
-  "main": "guides.js",
+  "main": "dist/guides.js",
   "keywords": [
     "guides",
     "guiders",
@@ -18,13 +18,14 @@
     "tour"
   ],
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
-    "node_modules",
-    "bower_components",
+    "demo",
+    "src",
     "test",
-    "tests"
+    "Gruntfile.js",
+    "package.json",
+    "*.md"
   ],
   "dependencies": {
     "jquery": "~2.1.1"

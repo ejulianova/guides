@@ -1,10 +1,14 @@
 guides.js
 ======
-Guides.js is a lightweight javascript library for making guided webside tours. It finds the element you want to highlight, creates a guide element using the html you specified in the configuration options and connects the guide and the highlighted element with an svg arrow.
+Guides.js is a lightweight javascript library for making guided website tours. It finds the element you want to highlight, creates a guide element using the html you specified in the configuration options and connects the guide and the highlighted element with an svg arrow.
+
+#Demo
+
+[http://ejulianova.github.io/guides/](http://ejulianova.github.io/guides/)
 
 #Getting started
 
-Once you have downloaded the source, simply include guides.css in the head of your document:
+Once you have downloaded the source, simply include guides.css in the head of your page:
 
 ```html
 <head>
@@ -13,7 +17,7 @@ Once you have downloaded the source, simply include guides.css in the head of yo
 </head>
 ```
 
-and guides.js to your scripts section. Make sure you include it after jquery:
+and guides.js in your page scripts section. Make sure you include it after jquery:
 
 ```html
 	...
@@ -22,7 +26,7 @@ and guides.js to your scripts section. Make sure you include it after jquery:
 </body>
 ```
 
-Note that you can import guides.scss and compile togerther with your websitse stylesheet if you are using sass.
+Note that you can import guides.scss and compile it togerther with your website styles if you are using sass.
 
 #Docs
 
@@ -35,11 +39,11 @@ Guides.js depends on jquery, so you need to make sure you include jquery first.
 Guides.js is a jquery plugin so it can be initialized on an element, that will "trigger" the guided tour:
 
 ```javascript
-$('#'demo'').guides({
+$('#demo').guides({
 	tips: tips
 });
 ```
-Now the tour will start everytime $('#'demo'') element is clicked.
+Now the tour will start everytime $('#demo') element is clicked.
 
 ##Configuration options
 
@@ -53,7 +57,7 @@ The default options are as follows:
 }
 ```
 
-* __distance__ _number_ - distance between the guide text and the element that it is related to.
+* __distance__ _number_ - distance between the guide text and the element that it is related to
 * __color__ _string_ - the guides arrows and text default color
 * __guides__ _array of objects_ - the list of guides
 
@@ -75,17 +79,31 @@ A guide object looks like this:
 
 ##Methods
 
-* __start__ $('#'demo'').guides("start");
-* __end__ $('#'demo'').guides("end");
-* __next__ $('#'demo'').guides("next");
-* __prev__ $('#'demo'').guides("prev");
-* __destroy__ $('#'demo'').guides("destroy");
-* __setOptions__ $('#'demo'').guides("setOptions", options);
+* __start__ $('#demo').guides('start');
+* __end__ $('#demo').guides('end');
+* __next__ $('#demo').guides('next');
+* __prev__ $('#demo').guides('prev');
+* __destroy__ $('#demo').guides('destroy');
+* __setOptions__ $('#demo').guides('setOptions', options);
 
 ##Events
 
-* __start__ $('#'demo'').guides({start: onStartFunction});
-* __end__ $('#'demo'').guides({end: onStartFunction});
-* __next__ $('#'demo'').guides({next: onNextFunction});
-* __prev__ $('#'demo'').guides({prev: onPrevFunction});
-* __destroy__ $('#'demo'').guides({destroy: onDestroyFunction});
+* __start__ $('#demo').guides({start: onStartFunction});
+* __end__ $('#demo').guides({end: onStartFunction});
+* __next__ $('#demo').guides({next: onNextFunction});
+* __prev__ $('#demo').guides({prev: onPrevFunction});
+* __destroy__ $('#demo').guides({destroy: onDestroyFunction});
+
+#Download
+
+The source is availabe on github: https://github.com/epetrova/guides/:
+
+```
+git clone https://github.com/epetrova/guides.git
+```
+
+Alternatively, you can install using Bower:
+
+```
+bower install guides
+```
