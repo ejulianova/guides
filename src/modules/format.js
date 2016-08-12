@@ -1,4 +1,4 @@
-var format = function() {
+module.exports = function format () {
   var s = arguments[0];
   for (var i = 0; i < arguments.length - 1; i++) {
     var reg = new RegExp("\\{" + i + "\\}", "gm");

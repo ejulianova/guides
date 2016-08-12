@@ -1,3 +1,5 @@
+var Guide = require('./Guide');
+
 var Guides = function (element, options) {
     this.element = element;
     this.$element = $(element);
@@ -37,7 +39,7 @@ Guides.prototype.end = function() {
         this._currentGuide.destroy();
         this._currentGuide = null;
     }
-    $(document).off('keyup.guides');    
+    $(document).off('keyup.guides');
     this._callback('end');
     return this;
 };
@@ -94,8 +96,8 @@ Guides.prototype._renderCanvas = function () {
             'class': 'guides-canvas guides-fade-in',
             'html': '<div class="guides-overlay"></div><div class="guides-mask"></div>'
         }).appendTo('body');
-    this._bindNavigation();    
-    return this;    
+    this._bindNavigation();
+    return this;
 };
 
 Guides.prototype._renderGuide = function (guide) {
@@ -147,3 +149,5 @@ Guides.prototype._onDocKeyUp = function (e) {
         break;
     }
 };
+
+module.exports = Guides;

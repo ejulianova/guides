@@ -1,10 +1,12 @@
+var format = require('./format');
+
 var Guide = function (guide, $container, options) {
     this.guide = guide;
     this._distance = guide.distance || options.distance;
     this._color = guide.color || options.color;
     this._class = guide.cssClass || options.cssClass || '';
     this._origElWidth = this.guide.element.outerWidth();
-    this._origElHeight = this.guide.element.outerHeight();  
+    this._origElHeight = this.guide.element.outerHeight();
     this.$container = $container;
     this.init();
 };
@@ -62,17 +64,17 @@ Guide.prototype._position = function () {
     case topSpace:
         this.position = 'top';
         css.paddingBottom = this._distance;
-        css.bottom = $(document).height() - elOffset.top;    
+        css.bottom = $(document).height() - elOffset.top;
         break;
     case rightSpace:
         this.position = 'right';
         css.paddingLeft = this._distance;
-        css.left = elOffset.left + this._origElWidth;        
+        css.left = elOffset.left + this._origElWidth;
         break;
     default:
         this.position = 'bottom';
         css.paddingTop = this._distance;
-        css.top = elOffset.top + this._origElHeight;        
+        css.top = elOffset.top + this._origElHeight;
         break;
     }
     this.$element.addClass('guides-' + this.position).css(css);
@@ -100,7 +102,7 @@ Guide.prototype.left = function () {
     return this._getPath(coord);
 };
 
-Guide.prototype.right = function () {     
+Guide.prototype.right = function () {
     var coord = this._horizontalAlign(true);
     return this._getPath(coord);
 };
@@ -183,3 +185,5 @@ Guide.prototype._scrollIntoView = function () {
 Guide.prototype.destroy = function() {
     this.$element.remove();
 };
+
+module.exports = Guide;

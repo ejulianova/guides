@@ -1,3 +1,5 @@
+var Guide = require('../src/modules/Guide');
+
 describe('Guide class tests', function() {
     var $element,
         $container = $('<div></div>', {
@@ -43,7 +45,7 @@ describe('Guide class tests', function() {
             html: 'Magna esse aliquet laborum et felis euismod'
         }, $container, options);
         expect(guide.position).toBe('bottom');
-    }); 
+    });
 
     it('auto positions - left', function() {
         $element.width(20);
@@ -157,6 +159,6 @@ describe('Guide class tests', function() {
         expect(coord.dx1 > this._width).toBe(false);
         expect(coord.dy1 < 0).toBe(false);
         expect(coord.dy1 > this._distance).toBe(false);
-    });     
+    });
 
 });

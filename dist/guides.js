@@ -1,20 +1,40 @@
-;(function (window, undefined) {
+/*
+ * guides 1.2.0
+ * Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.
+ * https://github.com/ejulianova/guides
+ *
+ * Copyright 2015, Elena Petrova <elena.julianova@gmail.com>
+ * Released under the MIT license.
+*/
+
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
-var format = function() {
-  var s = arguments[0];
-  for (var i = 0; i < arguments.length - 1; i++) {
-    var reg = new RegExp("\\{" + i + "\\}", "gm");
-    s = s.replace(reg, arguments[i + 1]);
-  }
-  return s;
+
+var Guides = require('./modules/Guides');
+
+$.fn.guides = function (option, optionData) {
+    return this.each(function () {
+        var $this = $(this),
+            data = $this.data('guides'),
+            options = typeof option === 'object' && option;
+
+        if (!data && typeof options == 'string') return;
+        if (!data) $this.data('guides', (data = new Guides(this, options)));
+        if (typeof option == 'string') data[option](optionData);
+    });
 };
+
+$.fn.guides.Constructor = Guides;
+},{"./modules/Guides":3}],2:[function(require,module,exports){
+var format = require('./format');
+
 var Guide = function (guide, $container, options) {
     this.guide = guide;
     this._distance = guide.distance || options.distance;
     this._color = guide.color || options.color;
     this._class = guide.cssClass || options.cssClass || '';
     this._origElWidth = this.guide.element.outerWidth();
-    this._origElHeight = this.guide.element.outerHeight();  
+    this._origElHeight = this.guide.element.outerHeight();
     this.$container = $container;
     this.init();
 };
@@ -72,17 +92,17 @@ Guide.prototype._position = function () {
     case topSpace:
         this.position = 'top';
         css.paddingBottom = this._distance;
-        css.bottom = $(document).height() - elOffset.top;    
+        css.bottom = $(document).height() - elOffset.top;
         break;
     case rightSpace:
         this.position = 'right';
         css.paddingLeft = this._distance;
-        css.left = elOffset.left + this._origElWidth;        
+        css.left = elOffset.left + this._origElWidth;
         break;
     default:
         this.position = 'bottom';
         css.paddingTop = this._distance;
-        css.top = elOffset.top + this._origElHeight;        
+        css.top = elOffset.top + this._origElHeight;
         break;
     }
     this.$element.addClass('guides-' + this.position).css(css);
@@ -110,7 +130,7 @@ Guide.prototype.left = function () {
     return this._getPath(coord);
 };
 
-Guide.prototype.right = function () {     
+Guide.prototype.right = function () {
     var coord = this._horizontalAlign(true);
     return this._getPath(coord);
 };
@@ -193,6 +213,11 @@ Guide.prototype._scrollIntoView = function () {
 Guide.prototype.destroy = function() {
     this.$element.remove();
 };
+
+module.exports = Guide;
+},{"./format":4}],3:[function(require,module,exports){
+var Guide = require('./Guide');
+
 var Guides = function (element, options) {
     this.element = element;
     this.$element = $(element);
@@ -232,7 +257,7 @@ Guides.prototype.end = function() {
         this._currentGuide.destroy();
         this._currentGuide = null;
     }
-    $(document).off('keyup.guides');    
+    $(document).off('keyup.guides');
     this._callback('end');
     return this;
 };
@@ -289,8 +314,8 @@ Guides.prototype._renderCanvas = function () {
             'class': 'guides-canvas guides-fade-in',
             'html': '<div class="guides-overlay"></div><div class="guides-mask"></div>'
         }).appendTo('body');
-    this._bindNavigation();    
-    return this;    
+    this._bindNavigation();
+    return this;
 };
 
 Guides.prototype._renderGuide = function (guide) {
@@ -342,17 +367,15 @@ Guides.prototype._onDocKeyUp = function (e) {
         break;
     }
 };
-$.fn.guides = function (option, optionData) {
-	return this.each(function () {
-		var $this = $(this),
-			data = $this.data('guides'),
-			options = typeof option === 'object' && option;
 
-		if (!data && typeof options == 'string') return;
-		if (!data) $this.data('guides', (data = new Guides(this, options)));
-		if (typeof option == 'string') data[option](optionData);
-	});
+module.exports = Guides;
+},{"./Guide":2}],4:[function(require,module,exports){
+module.exports = function format () {
+  var s = arguments[0];
+  for (var i = 0; i < arguments.length - 1; i++) {
+    var reg = new RegExp("\\{" + i + "\\}", "gm");
+    s = s.replace(reg, arguments[i + 1]);
+  }
+  return s;
 };
-
-$.fn.guides.Constructor = Guides;
-}(window));
+},{}]},{},[1])

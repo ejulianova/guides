@@ -1,21 +1,25 @@
 {
   "name": "guides",
-  "version": "1.0.0",
+  "version": "1.2.0",
+  "homepage": "https://github.com/ejulianova/guides",
   "authors": [
     "Elena Petrova <elena.julianova@gmail.com>"
   ],
-  "description": "Interactive Javascript library for making guided webside tours.",
+  "description": "Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.",
   "main": "dist/guides.js",
   "keywords": [
+    "guide",
     "guides",
     "guiders",
     "guided",
-    "tours",
-    "jquery",
-    "plugin",
-    "helpers",
+    "tour",
     "welcome",
-    "tour"
+    "helper",
+    "wizard",
+    "highlight",
+    "jquery-plugin",
+    "jquery",
+    "plugin"
   ],
   "license": "MIT",
   "ignore": [
@@ -23,7 +27,7 @@
     "demo",
     "src",
     "test",
-    "Gruntfile.js",
+    "gulpfile.js",
     "package.json",
     "*.md"
   ],

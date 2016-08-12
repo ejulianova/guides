@@ -1,3 +1,5 @@
+var Guides = require('../src/modules/Guides');
+
 describe("Guides class tests", function() {
 
     var $element = $('<div>Test</div>', {position: 'fixed'}).appendTo('body'),
@@ -27,7 +29,7 @@ describe("Guides class tests", function() {
             }, {
                 element: $element,
                 html: 'Read the docs'
-            }]            
+            }]
         });
         done();
     });
@@ -65,7 +67,7 @@ describe("Guides class tests", function() {
     });
 
     it('removes dom elements when the end method is called', function() {
-        guides.start().end();     
+        guides.start().end();
         expect(guides.$canvas).toBe(null);
         expect($('.guides-canvas').length).toBe(0);
     });
