@@ -52,6 +52,12 @@ gulp.task('style', function() {
     .pipe(connect.reload());
 });
 
+gulp.task('jquery-manifest', function() {
+  gulp.src('package.json')
+    .pipe(rename('guides.jquery.json'))
+    .pipe(gulp.dest('./'));
+});
+
 gulp.task('test', function (done) {
   new karmaServer({
     configFile: require('path').resolve('karma.conf.js'),
@@ -75,5 +81,5 @@ gulp.task('watch', ['server'], function() {
   });
 });
 
-gulp.task('build', ['test', 'script', 'style']);
+gulp.task('build', ['test', 'script', 'style', 'jquery-manifest']);
 gulp.task('default', ['build', 'watch']);
