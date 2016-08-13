@@ -40,7 +40,25 @@ Guides.js is a jquery plugin so it can be initialized on an element, that will "
 
 ```javascript
 $('#demo').guides({
-	tips: tips
+	guides: [{
+		element: $('.navbar-brand'),
+		html: 'Welcome to Guides.js'
+	}, {
+		element: $('.navbar'),
+		html: 'Navigate through guides.js website'
+	}, {
+		element: $('#demo'),
+		html: 'See how it works'
+	}, {
+		element: $('#download'),
+		html: 'Download guides.js'
+	}, {
+		element: $('#getting-started'),
+		html: 'Check out how to get started with guides.js'
+	}, {
+		element: $('#docs'),
+		html: 'Read the docs'
+	}]
 });
 ```
 Now the tour will start everytime $('#demo') element is clicked.
