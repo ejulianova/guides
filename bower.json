@@ -1,6 +1,6 @@
 {
   "name": "guides",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "homepage": "https://github.com/ejulianova/guides",
   "authors": [
     "Elena Petrova <elena.julianova@gmail.com>"
@@ -30,7 +30,6 @@
     "gulpfile.js",
     "package.json",
     "karma.conf.js",
-    "guides.jquery.json",
     "*.md"
   ],
   "dependencies": {
