@@ -29,6 +29,7 @@
     "test",
     "gulpfile.js",
     "package.json",
+    "karma.conf.js"
     "*.md"
   ],
   "dependencies": {
