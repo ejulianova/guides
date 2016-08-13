@@ -8,6 +8,7 @@ var sass = require('gulp-sass');
 var rename = require('gulp-rename');
 var banner = require('gulp-banner');
 var connect = require('gulp-connect');
+var ghPages = require('gulp-gh-pages');
 
 var pkg = require('./bower.json');
 
@@ -59,6 +60,16 @@ gulp.task('test', function (done) {
   }, done).start();
 });
 
+gulp.task('demo', function() {
+  return gulp.src(['./dist/guides.css', './dist/guides.min.js'])
+    .pipe(gulp.dest('demo/'));
+});
+
+gulp.task('github-page', ['demo'], function() {
+  return gulp.src(['./demo/**/*'])
+    .pipe(ghPages());
+});
+
 gulp.task('server', function () {
   connect.server({
     root: ['./'],
@@ -77,3 +88,4 @@ gulp.task('watch', ['server'], function() {
 
 gulp.task('build', ['test', 'script', 'style']);
 gulp.task('default', ['build', 'watch']);
+gulp.task('deploy', ['build', 'github-page']);

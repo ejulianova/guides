@@ -4,9 +4,9 @@
   "description": "Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.",
   "title": "Guides.js - highlight DOM elements and make guided tours",
   "author": {
-    "name" : "Elena Petrova",
-    "email" : "elena.julianova@gmail.com",
-    "url" : "http://ejulianova.github.io/guides/"
+    "name": "Elena Petrova",
+    "email": "elena.julianova@gmail.com",
+    "url": "http://ejulianova.github.io/guides/"
   },
   "main": "guides.js",
   "dependencies": {
@@ -17,6 +17,7 @@
     "gulp-banner": "^0.1.3",
     "gulp-browserify": "^0.5.1",
     "gulp-connect": "^5.0.0",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^2.0.0",
@@ -59,10 +60,10 @@
     "url": "https://github.com/ejulianova/guides/issues"
   },
   "licenses": [
-      {
-          "type": "MIT",
-          "url": "https://opensource.org/licenses/MIT"
-      }
+    {
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   ],
   "license": "MIT"
 }
