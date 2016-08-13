@@ -1,4 +1,5 @@
 .sass-cache
+.publish
 bower_components
 node_modules
 config.rb
