@@ -65,7 +65,25 @@
 			<p><em>Guides.js</em> is a jquery plugin and it can be initialized on an element, that will "trigger" the guided tour:</p>
 			<p><pre>
 $('#demo').guides({
-	tips: tips
+	guides: [{
+		element: $('.navbar-brand'),
+		html: 'Welcome to Guides.js'
+	}, {
+		element: $('.navbar'),
+		html: 'Navigate through guides.js website'
+	}, {
+		element: $('#demo'),
+		html: 'See how it works'
+	}, {
+		element: $('#download'),
+		html: 'Download guides.js'
+	}, {
+		element: $('#getting-started'),
+		html: 'Check out how to get started with guides.js'
+	}, {
+		element: $('#docs'),
+		html: 'Read the docs'
+	}]
 });</pre></p>
 			<p>Now the tour will start everytime <kbd>$('#demo')</kbd> element is clicked.</p>
 			<h4>Configuration options</h4>
