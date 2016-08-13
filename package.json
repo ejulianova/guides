@@ -1,8 +1,8 @@
 {
   "name": "guides",
   "version": "1.2.2",
-  "description": "Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.",
-  "title": "Guides.js - highlight DOM elements and make guided tours",
+  "description": "Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.",
+  "title": "Guides.js - highlight DOM elements and make step-by-step website tours",
   "author": {
     "name": "Elena Petrova",
     "email": "elena.julianova@gmail.com",
@@ -47,6 +47,9 @@
     "jquery-plugin",
     "jquery",
     "plugin",
+    "step-by-step",
+    "intro",
+    "introduction",
     "ecosystem:jquery"
   ],
   "docs": "http://ejulianova.github.io/guides/",

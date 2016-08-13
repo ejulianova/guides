@@ -5,13 +5,16 @@
   "authors": [
     "Elena Petrova <elena.julianova@gmail.com>"
   ],
-  "description": "Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.",
+  "description": "Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.",
   "main": "dist/guides.js",
   "keywords": [
     "guide",
     "guides",
     "guiders",
     "guided",
+    "step-by-step",
+    "intro",
+    "introduction",
     "tour",
     "welcome",
     "helper",
