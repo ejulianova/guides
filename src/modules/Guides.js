@@ -123,12 +123,7 @@ Guides.prototype._bindNavigation = function () {
 };
 
 Guides.prototype._onCanvasClick = function (e) {
-    var windowMiddle = window.innerWidth / 2;
-    if (e.clientX > windowMiddle) {
-        this.next();
-    } else {
-        this.prev();
-    }
+    this.next();
 };
 
 Guides.prototype._onDocKeyUp = function (e) {

@@ -1,5 +1,5 @@
 /*
- * guides 1.2.0
+ * guides 1.2.2
  * Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.
  * https://github.com/ejulianova/guides
  *
@@ -341,12 +341,7 @@ Guides.prototype._bindNavigation = function () {
 };
 
 Guides.prototype._onCanvasClick = function (e) {
-    var windowMiddle = window.innerWidth / 2;
-    if (e.clientX > windowMiddle) {
-        this.next();
-    } else {
-        this.prev();
-    }
+    this.next();
 };
 
 Guides.prototype._onDocKeyUp = function (e) {
