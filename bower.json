@@ -30,6 +30,7 @@
     "gulpfile.js",
     "package.json",
     "karma.conf.js",
+    "guides.jquery.json",
     "*.md"
   ],
   "dependencies": {
