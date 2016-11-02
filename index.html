@@ -111,7 +111,7 @@ $('#demo').guides({
 }</pre>
 			<dl class="dl-horizontal">
 				<dt>element</dt>
-				<dd><span class="label label-danger">required</span> <em>jquery element</em> - the element you want to highlight</dd>
+				<dd><span class="label label-default">optional</span> <em>jquery element</em> - the element you want to highlight; if omitted the guide will be centered</dd>
 				<dt>html</dt>
 				<dd><span class="label label-danger">required</span> <em>string</em> - this is the content of the tip: you can enter plain text or markup</dd>
 				<dt>color</dt>
@@ -160,7 +160,6 @@ $('#demo').guides({
 	<script type="text/javascript">
 		$('.demo').guides({
 			guides: [{
-				element: $('.navbar-brand'),
 				html: 'Welcome to Guides.js'
 			}, {
 				element: $('.navbar'),
