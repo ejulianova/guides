@@ -60,7 +60,7 @@ gulp.task('test', function (done) {
   }, done).start();
 });
 
-gulp.task('demo', function() {
+gulp.task('demo', ['script', 'style', 'test'], function() {
   return gulp.src(['./dist/guides.css', './dist/guides.min.js'])
     .pipe(gulp.dest('demo/'));
 });
@@ -80,12 +80,12 @@ gulp.task('server', function () {
 gulp.task('watch', ['server'], function() {
   open('http://localhost:8080/demo');
   gulp.watch('src/**/*', ['build']);
-  gulp.watch('test/**/*', ['test']);
+  gulp.watch('test/**/*', ['test', '']);
   gulp.watch('demo/**/*', function () {
     connect.reload();
   });
 });
 
-gulp.task('build', ['test', 'script', 'style']);
+gulp.task('build', ['demo']);
 gulp.task('default', ['build', 'watch']);
 gulp.task('deploy', ['build', 'github-page']);

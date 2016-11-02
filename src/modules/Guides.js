@@ -20,7 +20,7 @@ Guides.prototype.start = function(e) {
     if (e) {
         e.preventDefault();
     }
-    if (this.$canvas) {
+    if (this._isAlreadyRunning()) {
         return this;
     }
     this._current = 0;
@@ -45,7 +45,6 @@ Guides.prototype.end = function() {
 };
 
 Guides.prototype.next = function () {
-    this.options.guides[this._current].element.removeClass('guides-current-element');
     this._renderGuide(this.options.guides[++this._current])
         ._callback('next');
     return this;
@@ -55,7 +54,6 @@ Guides.prototype.prev = function () {
     if (!this._current) {
         return;
     }
-    this.options.guides[this._current].element.removeClass('guides-current-element');
     this._renderGuide(this.options.guides[--this._current])
         ._callback('prev');
     return this;
@@ -91,6 +89,10 @@ Guides.prototype._callback = function (eventName) {
     }
 };
 
+Guides.prototype._isAlreadyRunning = function () {
+    return !!this.$canvas;
+};
+
 Guides.prototype._renderCanvas = function () {
     this.$canvas = $('<div />', {
             'class': 'guides-canvas guides-fade-in',
@@ -106,8 +108,6 @@ Guides.prototype._renderGuide = function (guide) {
         return this;
     }
 
-    guide.element
-        .addClass('guides-current-element');
     if (this._currentGuide) {
         this._currentGuide.destroy();
     }

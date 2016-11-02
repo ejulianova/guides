@@ -1,6 +1,6 @@
 /*
  * guides 1.2.2
- * Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.
+ * Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.
  * https://github.com/ejulianova/guides
  *
  * Copyright 2015, Elena Petrova <elena.julianova@gmail.com>
@@ -59,7 +59,6 @@
     text-shadow: 0 0 10px #000;
     position: absolute;
     margin: 5px;
-    max-width: 90%;
     z-index: 99999;
     svg {
         position: absolute;

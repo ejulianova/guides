@@ -1,6 +1,6 @@
 /*
  * guides 1.2.2
- * Simple lightweight Javascript library for highlighting DOM elements and making guided website welcome tours.
+ * Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.
  * https://github.com/ejulianova/guides
  *
  * Copyright 2015, Elena Petrova <elena.julianova@gmail.com>
@@ -33,8 +33,7 @@ var Guide = function (guide, $container, options) {
     this._distance = guide.distance || options.distance;
     this._color = guide.color || options.color;
     this._class = guide.cssClass || options.cssClass || '';
-    this._origElWidth = this.guide.element.outerWidth();
-    this._origElHeight = this.guide.element.outerHeight();
+    this._element = $(guide.element).addClass('guides-current-element');
     this.$container = $container;
     this.init();
 };
@@ -61,25 +60,45 @@ Guide.prototype.init = function() {
         'html': '<span>' + this.guide.html + '</span>'
     });
     this._position();
-    this.$element.appendTo(this.$container);
-    this._renderArrow();
-    this._scrollIntoView();
     return this;
 };
 
 Guide.prototype._position = function () {
-    var elOffset = this.guide.element.offset(),
-        docWidth = $(document).width(),
-        docHeight = $(document).height(),
+    if (this._element && this._element.length > 0) {
+        this._attachToElement();
+        this.$element.appendTo(this.$container);
+        this._renderArrow();
+    } else {
+        this._center();
+        this.$element.appendTo(this.$container);
+    }
+    this._scrollIntoView();
+};
+
+Guide.prototype._center = function () {
+    this.$element.addClass('guides-center').css({
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        top: 200
+    });
+};
+
+Guide.prototype._attachToElement = function () {
+    var elOffset = this._element.offset(),
+        docWidth = $('body').width(),
+        docHeight = $('body').height(),
         leftSpace = elOffset.left,
-        rightSpace = docWidth - elOffset.left - this._origElWidth,
         topSpace = elOffset.top,
-        bottomSpace = docHeight - elOffset.top - this._origElHeight,
+        highlightedElementWidth = this._element.outerWidth(),
+        highlightedElementHeight = this._element.outerHeight(),
+        rightSpace = docWidth - leftSpace - highlightedElementWidth,
+        bottomSpace = docHeight - topSpace - highlightedElementHeight,
         css = {
             color: this._color,
             top: docHeight / 2 > elOffset.top ? elOffset.top : 'auto',
             left: docWidth / 2 > elOffset.left ? elOffset.left : 'auto',
-            right: docWidth / 2 > elOffset.left ? 'auto' : docWidth - elOffset.left - this._origElWidth,
+            right: docWidth / 2 > elOffset.left ? 'auto' : docWidth - elOffset.left - highlightedElementWidth,
             bottom: docHeight / 2 > elOffset.top ? 'auto' : elOffset.bottom
         };
 
@@ -97,12 +116,12 @@ Guide.prototype._position = function () {
     case rightSpace:
         this.position = 'right';
         css.paddingLeft = this._distance;
-        css.left = elOffset.left + this._origElWidth;
+        css.left = elOffset.left + highlightedElementWidth;
         break;
     default:
         this.position = 'bottom';
         css.paddingTop = this._distance;
-        css.top = elOffset.top + this._origElHeight;
+        css.top = elOffset.top + highlightedElementHeight;
         break;
     }
     this.$element.addClass('guides-' + this.position).css(css);
@@ -148,7 +167,7 @@ Guide.prototype._verticalAlign = function (bottom) {
         y1 = bottom ? this._distance : 0,
         x2 = Math.max(
                 Math.min(
-                    this.guide.element.offset().left + (this._origElWidth / 2) - this.$element.offset().left,
+                    this.guide.element.offset().left + (this._element.outerWidth() / 2) - this.$element.offset().left,
                     this._width - this._arrowSize),
                 this._arrowSize),
         y2 = bottom ? this._arrowSize : this._distance - this._arrowSize;
@@ -174,7 +193,7 @@ Guide.prototype._horizontalAlign = function (right) {
         x2 = right ? this._arrowSize : this._width - this._arrowSize,
         y2 = Math.max(
                 Math.min(
-                    this.guide.element.offset().top + (this._origElHeight / 2) - this.$element.offset().top,
+                    this._element.offset().top + (this._element.outerHeight() / 2) - this.$element.offset().top,
                     this._height - this._arrowSize),
                 this._arrowSize);
     return {
@@ -194,23 +213,30 @@ Guide.prototype._horizontalAlign = function (right) {
 };
 
 Guide.prototype._scrollIntoView = function () {
-    //scroll vertically to element if it is not visible in the view port
-    if ($(document).scrollTop() > this.guide.element.offset().top
-        || $(document).scrollTop() + $(window).height() < this.guide.element.offset().top) {
+    if (this._element.length === 0) {
         $('html,body').animate({
-          scrollTop: this.guide.element.offset().top
+          scrollTop: 0
+        }, 500);
+        return;
+    }
+    //scroll vertically to element if it is not visible in the view port
+    if ($(document).scrollTop() > this._element.offset().top
+        || $(document).scrollTop() + $(window).height() < this._element.offset().top) {
+        $('html,body').animate({
+          scrollTop: this._element.offset().top
         }, 500);
     }
     //scroll horizontally to element if it is not visible in the view port
-    if ($(document).scrollLeft() > this.guide.element.offset().left
-        || $(document).scrollLeft() + $(window).height() < this.guide.element.offset().left) {
+    if ($(document).scrollLeft() > this._element.offset().left
+        || $(document).scrollLeft() + $(window).height() < this._element.offset().left) {
         $('html,body').animate({
-          scrollLeft: this.guide.element.offset().left
+          scrollLeft: this._element.offset().left
         }, 500);
     }
 };
 
 Guide.prototype.destroy = function() {
+    this._element.removeClass('guides-current-element');
     this.$element.remove();
 };
 
@@ -238,7 +264,7 @@ Guides.prototype.start = function(e) {
     if (e) {
         e.preventDefault();
     }
-    if (this.$canvas) {
+    if (this._isAlreadyRunning()) {
         return this;
     }
     this._current = 0;
@@ -263,7 +289,6 @@ Guides.prototype.end = function() {
 };
 
 Guides.prototype.next = function () {
-    this.options.guides[this._current].element.removeClass('guides-current-element');
     this._renderGuide(this.options.guides[++this._current])
         ._callback('next');
     return this;
@@ -273,7 +298,6 @@ Guides.prototype.prev = function () {
     if (!this._current) {
         return;
     }
-    this.options.guides[this._current].element.removeClass('guides-current-element');
     this._renderGuide(this.options.guides[--this._current])
         ._callback('prev');
     return this;
@@ -309,6 +333,10 @@ Guides.prototype._callback = function (eventName) {
     }
 };
 
+Guides.prototype._isAlreadyRunning = function () {
+    return !!this.$canvas;
+};
+
 Guides.prototype._renderCanvas = function () {
     this.$canvas = $('<div />', {
             'class': 'guides-canvas guides-fade-in',
@@ -324,8 +352,6 @@ Guides.prototype._renderGuide = function (guide) {
         return this;
     }
 
-    guide.element
-        .addClass('guides-current-element');
     if (this._currentGuide) {
         this._currentGuide.destroy();
     }

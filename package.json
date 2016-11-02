@@ -1,6 +1,6 @@
 {
   "name": "guides",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.",
   "title": "Guides.js - highlight DOM elements and make step-by-step website tours",
   "author": {
