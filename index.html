@@ -86,6 +86,30 @@ $('#demo').guides({
 	}]
 });</pre></p>
 			<p>Now the tour will start everytime <kbd>$('#demo')</kbd> element is clicked.</p>
+			<p>If you want to manually start the tour you can do the following:</p>
+			<p><pre>
+var guides = $.guides({
+	guides: [{
+			html: 'Welcome to Guides.js'
+		}, {
+			element: $('.navbar'),
+			html: 'Navigate through guides.js website'
+		}, {
+			element: $('#demo'),
+			html: 'See how it works'
+		}, {
+			element: $('#download'),
+			html: 'Download guides.js'
+		}, {
+			element: $('#getting-started'),
+			html: 'Check out how to get started with guides.js'
+		}, {
+			element: $('#docs'),
+			html: 'Read the docs'
+		}]
+	});
+guides.start();
+			</pre></p>
 			<h4>Configuration options</h4>
 			<h5>The default options are as follows:</h5>
 			<p><pre>
