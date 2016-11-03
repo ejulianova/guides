@@ -1,5 +1,5 @@
 /*
- * guides 1.2.4
+ * guides 1.2.6
  * Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.
  * https://github.com/ejulianova/guides
  *
@@ -74,18 +74,21 @@ Guide.prototype._position = function () {
         this._renderArrow();
     } else {
         this._center();
-        this.$element.appendTo(this.$container);
     }
     this._scrollIntoView();
 };
 
 Guide.prototype._center = function () {
-    this.$element.addClass('guides-center').css({
-        left: 0,
-        right: 0,
-        textAlign: 'center',
-        top: 200
-    });
+    this.$element
+        .css('visibility', 'hidden')
+        .appendTo(this.$container)
+        .addClass('guides-center')
+        .css({
+            left: 0,
+            right: 0,
+            textAlign: 'center',
+            top: (window.innerHeight / 2) - (this.$element.outerHeight() / 2)
+        }).css('visibility', 'visible');
 };
 
 Guide.prototype._attachToElement = function () {
