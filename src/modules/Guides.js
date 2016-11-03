@@ -6,7 +6,9 @@ var Guides = function (element, options) {
     this.options = {};
     this._current = 0;
     this.setOptions(options);
-    this.$element.on('click.guides', $.proxy(this.start, this));
+    if (element) {
+        this.$element.on('click.guides', $.proxy(this.start, this));
+    }
 };
 
 Guides.DEFAULTS = {

@@ -24,6 +24,10 @@ $.fn.guides = function (option, optionData) {
     });
 };
 
+$.guides = function (options) {
+    return new Guides(null, options);
+};
+
 $.fn.guides.Constructor = Guides;
 },{"./modules/Guides":3}],2:[function(require,module,exports){
 var format = require('./format');
@@ -250,7 +254,9 @@ var Guides = function (element, options) {
     this.options = {};
     this._current = 0;
     this.setOptions(options);
-    this.$element.on('click.guides', $.proxy(this.start, this));
+    if (element) {
+        this.$element.on('click.guides', $.proxy(this.start, this));
+    }
 };
 
 Guides.DEFAULTS = {

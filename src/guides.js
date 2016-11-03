@@ -14,4 +14,8 @@ $.fn.guides = function (option, optionData) {
     });
 };
 
+$.guides = function (options) {
+    return new Guides(null, options);
+};
+
 $.fn.guides.Constructor = Guides;
