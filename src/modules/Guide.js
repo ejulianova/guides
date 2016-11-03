@@ -139,7 +139,7 @@ Guide.prototype._verticalAlign = function (bottom) {
         y1 = bottom ? this._distance : 0,
         x2 = Math.max(
                 Math.min(
-                    this.guide.element.offset().left + (this._element.outerWidth() / 2) - this.$element.offset().left,
+                    this._element.offset().left + (this._element.outerWidth() / 2) - this.$element.offset().left,
                     this._width - this._arrowSize),
                 this._arrowSize),
         y2 = bottom ? this._arrowSize : this._distance - this._arrowSize;
