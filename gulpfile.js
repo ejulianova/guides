@@ -72,18 +72,16 @@ gulp.task('github-page', ['demo'], function() {
 
 gulp.task('server', function () {
   connect.server({
-    root: ['./'],
-    port: 8080
-  })
+    root: ['./demo'],
+    port: 8080,
+    livereload: true
+  });
 });
 
 gulp.task('watch', ['server'], function() {
-  open('http://localhost:8080/demo');
+  open('http://localhost:8080/');
   gulp.watch('src/**/*', ['build']);
-  gulp.watch('test/**/*', ['test', '']);
-  gulp.watch('demo/**/*', function () {
-    connect.reload();
-  });
+  gulp.watch(['demo/**/*.html', 'demo/**/*.scss'], ['build']);
 });
 
 gulp.task('build', ['demo']);

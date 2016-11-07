@@ -5,7 +5,7 @@ var Guide = function (guide, $container, options) {
     this._distance = guide.distance || options.distance;
     this._color = guide.color || options.color;
     this._class = guide.cssClass || options.cssClass || '';
-    this._element = $(guide.element).addClass('guides-current-element');
+    this.$highlightedElement = $(guide.element).addClass('guides-current-element');
     this.$container = $container;
     this.init();
 };
@@ -27,7 +27,7 @@ Guide.prototype._arrowTemplate = '<svg width="{0}" height="{1}">\
 </svg>';
 
 Guide.prototype.init = function() {
-    this.$element = $('<div />', {
+    this.$guide = $('<div />', {
         'class': 'guides-fade-in guides-guide ' + this._class,
         'html': '<span>' + this.guide.html + '</span>'
     });
@@ -36,9 +36,9 @@ Guide.prototype.init = function() {
 };
 
 Guide.prototype._position = function () {
-    if (this._element && this._element.length > 0) {
+    if (this.$highlightedElement && this.$highlightedElement.length > 0) {
         this._attachToElement();
-        this.$element.appendTo(this.$container);
+        this.$guide.appendTo(this.$container);
         this._renderArrow();
     } else {
         this._center();
@@ -47,7 +47,7 @@ Guide.prototype._position = function () {
 };
 
 Guide.prototype._center = function () {
-    this.$element
+    this.$guide
         .css('visibility', 'hidden')
         .appendTo(this.$container)
         .addClass('guides-center')
@@ -55,18 +55,18 @@ Guide.prototype._center = function () {
             left: 0,
             right: 0,
             textAlign: 'center',
-            top: (window.innerHeight / 2) - (this.$element.outerHeight() / 2)
+            top: (window.innerHeight / 2) - (this.$guide.outerHeight() / 2)
         }).css('visibility', 'visible');
 };
 
 Guide.prototype._attachToElement = function () {
-    var elOffset = this._element.offset(),
+    var elOffset = this.$highlightedElement.offset(),
         docWidth = $('body').width(),
         docHeight = $('body').height(),
         leftSpace = elOffset.left,
         topSpace = elOffset.top,
-        highlightedElementWidth = this._element.outerWidth(),
-        highlightedElementHeight = this._element.outerHeight(),
+        highlightedElementWidth = this.$highlightedElement.outerWidth(),
+        highlightedElementHeight = this.$highlightedElement.outerHeight(),
         rightSpace = docWidth - leftSpace - highlightedElementWidth,
         bottomSpace = docHeight - topSpace - highlightedElementHeight,
         css = {
@@ -99,13 +99,13 @@ Guide.prototype._attachToElement = function () {
         css.top = elOffset.top + highlightedElementHeight;
         break;
     }
-    this.$element.addClass('guides-' + this.position).css(css);
+    this.$guide.addClass('guides-' + this.position).css(css);
 };
 
 Guide.prototype._renderArrow = function() {
-    this._width = this.$element.outerWidth();
-    this._height = this.$element.outerHeight();
-    this.$element.append(format(this._arrowTemplate,
+    this._width = this.$guide.outerWidth();
+    this._height = this.$guide.outerHeight();
+    this.$guide.append(format(this._arrowTemplate,
         this._width, this._distance, this[this.position](), this._arrowSize, this._color));
 };
 
@@ -142,7 +142,7 @@ Guide.prototype._verticalAlign = function (bottom) {
         y1 = bottom ? this._distance : 0,
         x2 = Math.max(
                 Math.min(
-                    this._element.offset().left + (this._element.outerWidth() / 2) - this.$element.offset().left,
+                    this.$highlightedElement.offset().left + (this.$highlightedElement.outerWidth() / 2) - this.$guide.offset().left,
                     this._width - this._arrowSize),
                 this._arrowSize),
         y2 = bottom ? this._arrowSize : this._distance - this._arrowSize;
@@ -168,7 +168,7 @@ Guide.prototype._horizontalAlign = function (right) {
         x2 = right ? this._arrowSize : this._width - this._arrowSize,
         y2 = Math.max(
                 Math.min(
-                    this._element.offset().top + (this._element.outerHeight() / 2) - this.$element.offset().top,
+                    this.$highlightedElement.offset().top + (this.$highlightedElement.outerHeight() / 2) - this.$guide.offset().top,
                     this._height - this._arrowSize),
                 this._arrowSize);
     return {
@@ -188,31 +188,41 @@ Guide.prototype._horizontalAlign = function (right) {
 };
 
 Guide.prototype._scrollIntoView = function () {
-    if (this._element.length === 0) {
+    if (this.$highlightedElement.length === 0) {
         $('html,body').animate({
           scrollTop: 0
         }, 500);
         return;
     }
+    var elementOffset = this.$highlightedElement.offset(),
+        guideOffset = this.$guide.offset(),
+        top = Math.min(elementOffset.top, guideOffset.top),
+        bottom = Math.max(elementOffset.top + this.$highlightedElement.outerHeight(),
+            guideOffset.top + this.$guide.outerHeight()),
+        left = Math.min(elementOffset.left, guideOffset.left),
+        right = Math.max(elementOffset.left + this.$highlightedElement.outerWidth(),
+            guideOffset.top + this.$guide.outerWidth()),
+        scrollTop = $(document).scrollTop(),
+        scrollLeft = $(document).scrollLeft();
+
     //scroll vertically to element if it is not visible in the view port
-    if ($(document).scrollTop() > this._element.offset().top
-        || $(document).scrollTop() + $(window).height() < this._element.offset().top) {
+    if (scrollTop > top || scrollTop + $(window).height() < bottom) {
         $('html,body').animate({
-          scrollTop: this._element.offset().top
+          scrollTop: this.$highlightedElement.offset().top
         }, 500);
     }
+
     //scroll horizontally to element if it is not visible in the view port
-    if ($(document).scrollLeft() > this._element.offset().left
-        || $(document).scrollLeft() + $(window).height() < this._element.offset().left) {
+    if (scrollLeft > left || scrollLeft + $(window).width() < right) {
         $('html,body').animate({
-          scrollLeft: this._element.offset().left
+          scrollLeft: this.$highlightedElement.offset().left
         }, 500);
     }
 };
 
 Guide.prototype.destroy = function() {
-    this._element.removeClass('guides-current-element');
-    this.$element.remove();
+    this.$highlightedElement.removeClass('guides-current-element');
+    this.$guide.remove();
 };
 
 module.exports = Guide;
