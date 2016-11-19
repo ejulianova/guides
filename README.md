@@ -120,6 +120,7 @@ A guide object looks like this:
 * __element__ (optional) _jquery element or string_ -  the element (or selector) you want to highlight; if omitted the guide will be centered;
 * __html__ (required) _string_ - this is the content of the tip: you can enter plain text or markup
 * __color__ (optional) _string_ - the guide arrow and text color (falls back to the default color if not specified)
+* __render__ (optional) _function_ - a callback function that is called before guide is rendered
 
 ##Methods
 

@@ -1,5 +1,5 @@
 /*
- * guides 1.2.8
+ * guides 1.2.9
  * Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.
  * https://github.com/ejulianova/guides
  *
@@ -376,7 +376,12 @@ Guides.prototype._renderGuide = function (guide) {
         this._currentGuide.destroy();
     }
 
-    this._callback('render');
+    this._callback('render', guide);
+
+    if ($.isFunction(guide.render)) {
+        guide.render.apply(this, [guide]);
+    }
+
     this._currentGuide = new Guide(guide, this.$canvas, this.options);
     return this;
 };
