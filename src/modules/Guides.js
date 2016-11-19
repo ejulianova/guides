@@ -114,6 +114,7 @@ Guides.prototype._renderGuide = function (guide) {
         this._currentGuide.destroy();
     }
 
+    this._callback('render');
     this._currentGuide = new Guide(guide, this.$canvas, this.options);
     return this;
 };

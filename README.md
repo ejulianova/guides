@@ -136,6 +136,7 @@ A guide object looks like this:
 * __end__ $('#demo').guides({end: onStartFunction});
 * __next__ $('#demo').guides({next: onNextFunction});
 * __prev__ $('#demo').guides({prev: onPrevFunction});
+* __render__ $('#demo').guides({render: onRenderFunction});
 * __destroy__ $('#demo').guides({destroy: onDestroyFunction});
 
 #Download

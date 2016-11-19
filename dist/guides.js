@@ -1,5 +1,5 @@
 /*
- * guides 1.2.6
+ * guides 1.2.8
  * Simple way to highlighting DOM elements and guide your users with step-by-step welcome tours in your web app.
  * https://github.com/ejulianova/guides
  *
@@ -114,21 +114,25 @@ Guide.prototype._attachToElement = function () {
         this.position = 'left';
         css.paddingRight = this._distance;
         css.right = $(document).width() - elOffset.left;
+        css.left = 'auto';
         break;
     case topSpace:
         this.position = 'top';
         css.paddingBottom = this._distance;
         css.bottom = $(document).height() - elOffset.top;
+        css.top = 'auto';
         break;
     case rightSpace:
         this.position = 'right';
         css.paddingLeft = this._distance;
         css.left = elOffset.left + highlightedElementWidth;
+        css.right = 'auto';
         break;
     default:
         this.position = 'bottom';
         css.paddingTop = this._distance;
         css.top = elOffset.top + highlightedElementHeight;
+        css.bottom = 'auto';
         break;
     }
     this.$guide.addClass('guides-' + this.position).css(css);
@@ -226,28 +230,25 @@ Guide.prototype._scrollIntoView = function () {
         }, 500);
         return;
     }
-    var elementOffset = this.$highlightedElement.offset(),
-        guideOffset = this.$guide.offset(),
-        top = Math.min(elementOffset.top, guideOffset.top),
-        bottom = Math.max(elementOffset.top + this.$highlightedElement.outerHeight(),
-            guideOffset.top + this.$guide.outerHeight()),
-        left = Math.min(elementOffset.left, guideOffset.left),
-        right = Math.max(elementOffset.left + this.$highlightedElement.outerWidth(),
-            guideOffset.top + this.$guide.outerWidth()),
+    var guideOffset = this.$guide.offset(),
+        top = guideOffset.top,
+        bottom = guideOffset.top + this.$guide.outerHeight(),
+        left = guideOffset.left,
+        right = guideOffset.left + this.$guide.outerWidth(),
         scrollTop = $(document).scrollTop(),
         scrollLeft = $(document).scrollLeft();
 
     //scroll vertically to element if it is not visible in the view port
     if (scrollTop > top || scrollTop + $(window).height() < bottom) {
         $('html,body').animate({
-          scrollTop: this.$highlightedElement.offset().top
+          scrollTop: this.position === 'bottom' ? top - 100 : top
         }, 500);
     }
 
     //scroll horizontally to element if it is not visible in the view port
     if (scrollLeft > left || scrollLeft + $(window).width() < right) {
         $('html,body').animate({
-          scrollLeft: this.$highlightedElement.offset().left
+          scrollLeft: this.position === 'righ' ? left - 100 : left
         }, 500);
     }
 };
@@ -375,6 +376,7 @@ Guides.prototype._renderGuide = function (guide) {
         this._currentGuide.destroy();
     }
 
+    this._callback('render');
     this._currentGuide = new Guide(guide, this.$canvas, this.options);
     return this;
 };
