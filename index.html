@@ -166,6 +166,8 @@ guides.start();
 				<dd><kbd>$('#demo').guides({next: onNextFunction});</kbd> Called after showing the next guide.</dd>
 				<dt>prev</dt>
 				<dd><kbd>$('#demo').guides({prev: onPrevFunction});</kbd> Called after showing the previous guide.</dd>
+				<dt>render</dt>
+				<dd><kbd>$('#demo').guides({render: onRenderFunction});</kbd> Called before a guide is rendered.</dd>
 				<dt>destroy</dt>
 				<dd><kbd>$('#demo').guides({destroy: onDestroyFunction});</kbd> Called after destroying.</dd>
 			</dl>
@@ -180,7 +182,7 @@ guides.start();
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="guides.min.js"></script>
+	<script type="text/javascript" src="./guides.min.js"></script>
 	<script type="text/javascript">
 		$('.demo').guides({
 			guides: [{
