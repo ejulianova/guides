@@ -3,7 +3,7 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
     frameworks: ['jasmine', 'browserify'],
     files: [
-      'bower_components/jquery/dist/jquery.js',
+      'node_modules/jquery/dist/jquery.js',
       'test/**/*.spec.js'
     ],
     preprocessors: {
