@@ -1,155 +1,90 @@
-guides.js
-======
-Guides.js is a lightweight javascript library for making guided website tours. It finds the element you want to highlight, creates a guide element using the html you specified in the configuration options and connects the guide and the highlighted element with an svg arrow.
+# guides.js
 
-#Demo
+Guides.js is a lightweight javascript library for guided website tours. It finds the element you want to highlight, creates a "tip" using the html you specified pointing to the highlighted element.
+
+## Demo
 
 [http://ejulianova.github.io/guides/](http://ejulianova.github.io/guides/)
 
-#Getting started
+## Installaton
 
-Once you have downloaded the source, simply include guides.css in the head of your page:
-
-```html
-<head>
-	...
-	<link rel="stylesheet" type="text/css" href="guides.css" >
-</head>
+```shell
+npm i guides
 ```
 
-and guides.js in your page scripts section. Make sure you include it after jquery:
-
-```html
-	...
-	<script type="text/javascript" src="jquery.js" >
-	<script type="text/javascript" src="guides.js" >
-</body>
-```
-
-Note that you can import guides.scss and compile it togerther with your website styles if you are using sass.
-
-#Docs
-
-##Dependencies
-
-Guides.js depends on jquery, so you need to make sure you include jquery first.
-
-##Initialization
-
-Guides.js is a jquery plugin so it can be initialized on an element, that will "trigger" the guided tour:
+## Usage
 
 ```javascript
-$('#demo').guides({
-	guides: [{
-		element: $('.navbar-brand'),
-		html: 'Welcome to Guides.js'
-	}, {
-		element: $('.navbar'),
-		html: 'Navigate through guides.js website'
-	}, {
-		element: $('#demo'),
-		html: 'See how it works'
-	}, {
-		element: $('#download'),
-		html: 'Download guides.js'
-	}, {
-		element: $('#getting-started'),
-		html: 'Check out how to get started with guides.js'
-	}, {
-		element: $('#docs'),
-		html: 'Read the docs'
-	}]
+import Guides from 'guides';
+
+const tour = new Guides({
+  color: 'white',
+  distance: 100,
+  guides: [
+    {
+      html: 'Welcome to Guides.js',
+    },
+    {
+      element: document.querySelector('.navbar'),
+      html: 'Navigate through guides.js website',
+    },
+    {
+      element: document.querySelector('#demo'),
+      html: 'See how it works',
+    },
+    {
+      element: document.querySelector('#download'),
+      html: 'Download guides.js',
+    },
+    {
+      element: document.querySelector('#installation'),
+      html: 'Check out how to get started with guides.js',
+    },
+    {
+      element: document.querySelector('#docs'),
+      html: 'Read the docs',
+    },
+  ],
+  render: (event) => console.log(event),
+  start: (event) => console.log(event),
+  end: (event) => console.log(event),
+  next: (event) => console.log(event),
+  prev: (event) => console.log(event),
+});
+
+document.querySelectorAll('.demo').forEach((button) => {
+  button.addEventListener('click', () => tour.start());
 });
 ```
-Now the tour will start everytime $('#demo') element is clicked.
 
-If you want to manually start the tour you can do the following:
+Now the tour will start everytime any of the `.demo` buttons are clicked.
 
-```javascript
-var guides = $.guides({
-	guides: [{
-			html: 'Welcome to Guides.js'
-		}, {
-			element: $('.navbar'),
-			html: 'Navigate through guides.js website'
-		}, {
-			element: $('#demo'),
-			html: 'See how it works'
-		}, {
-			element: $('#download'),
-			html: 'Download guides.js'
-		}, {
-			element: $('#getting-started'),
-			html: 'Check out how to get started with guides.js'
-		}, {
-			element: $('#docs'),
-			html: 'Read the docs'
-		}]
-	});
-guides.start();
-````
+## Configuration
 
-##Configuration options
+| option     |          | type     | default | description                                                              |
+| ---------- | -------- | -------- | ------- | ------------------------------------------------------------------------ |
+| `guides`   | required | array    |         | list of guides                                                           |
+| `distance` | optional | number   | 100     | distance between the tip and the highlighted element                     |
+| `color`    | optional | string   | #fff    | arrows and text color                                                    |
+| `start`    | optional | function |         | a callback function that is called when the tour starts                  |
+| `end`      | optional | function |         | a callback function that is called when the tour ends                    |
+| `next`     | optional | function |         | a callback function that is called after moving forward to the next tip  |
+| `prev`     | optional | function |         | a callback function that is called after moving back to the previous tip |
+| `render`   | optional | function |         | a callback function that is called before guide is rendered              |
 
-The default options are as follows:
+For each guide in the guides array you can specify the following options
 
-```javascript
-{
-	distance: 100,
-	color: '#fffff',
-	guides: []
-}
-```
+| Option Name | Type     | Description                                                              |
+| ----------- | -------- | ------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| `html`      | required | string                                                                   | the tip's content - either plain text or markup              |
+| `element`   | optional | DOM node the element to highlight; if omitted the guide will be centered |
+| `color`     | optional | string                                                                   | arrows and text color; if omitted the global one will be use |
 
-* __distance__ _number_ - distance between the guide text and the element that it is related to
-* __color__ _string_ - the guides arrows and text default color
-* __guides__ _array of objects_ - the list of guides
+## Methods
 
-###The guides array
-
-A guide object looks like this:
-
-```javascript
-{
-	element: $('.navbar-brand'),
-	html: 'Welcome to Guides.js',
-	color: '#fff'
-}
-```
-
-* __element__ (optional) _jquery element or string_ -  the element (or selector) you want to highlight; if omitted the guide will be centered;
-* __html__ (required) _string_ - this is the content of the tip: you can enter plain text or markup
-* __color__ (optional) _string_ - the guide arrow and text color (falls back to the default color if not specified)
-* __render__ (optional) _function_ - a callback function that is called before guide is rendered
-
-##Methods
-
-* __start__ $('#demo').guides('start');
-* __end__ $('#demo').guides('end');
-* __next__ $('#demo').guides('next');
-* __prev__ $('#demo').guides('prev');
-* __destroy__ $('#demo').guides('destroy');
-* __setOptions__ $('#demo').guides('setOptions', options);
-
-##Events
-
-* __start__ $('#demo').guides({start: onStartFunction});
-* __end__ $('#demo').guides({end: onStartFunction});
-* __next__ $('#demo').guides({next: onNextFunction});
-* __prev__ $('#demo').guides({prev: onPrevFunction});
-* __render__ $('#demo').guides({render: onRenderFunction});
-* __destroy__ $('#demo').guides({destroy: onDestroyFunction});
-
-#Download
-
-The source is availabe on github: https://github.com/epetrova/guides/:
-
-```
-git clone https://github.com/epetrova/guides.git
-```
-
-Alternatively, you can install using Bower:
-
-```
-bower install guides
-```
+| Method  | Name                      | Description |
+| ------- | ------------------------- | ----------- |
+| `start` | starts the guided tour    |
+| `end`   | exits the guided tour     |
+| `next`  | moves to the next tip     |
+| `prev`  | moves to the previous tip |

@@ -5,13 +5,16 @@
 	<title>guides.js</title>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="screen.css">
-	<link rel="stylesheet" type="text/css" href="guides.css">
+	<link rel="stylesheet" href="https://unpkg.com/prismjs@1.22.0/themes/prism-tomorrow.css">
+	<style>
+		h3.guides-current-element {
+			background-color: #fff;
+		}
+	</style>
 </head>
 <body>
 	<nav class="navbar navbar-default" role="navigation">
 	  <div class="container-fluid">
-	    <!-- Brand and toggle get grouped for better mobile display -->
 	    <div class="navbar-header">
 	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 	        <span class="sr-only">Toggle navigation</span>
@@ -22,190 +25,240 @@
 	      <a class="navbar-brand" href="#">guides.js</a>
 	    </div>
 
-	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#getting-started">getting started</a></li>
-	        <li><a href="#docs">docs</a></li>
-	        <li><a href="#download">download</a></li>
+	        <li class="active"><a href="#installation">Installation</a></li>
+	        <li><a href="#usage">Usage</a></li>
+	        <li><a href="#configuration">Configuration</a></li>
 	      </ul>
 	      <p class="navbar-btn navbar-right">
 	      	<button type="button" id="demo" class="demo btn btn-success">Start demo</button>
 	      </p>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
+	    </div>
+	  </div>
 	</nav>
 
 	<div role="main" class="container">
 		<div class="page-header">
-		  <h1>Guides.js <small>lightweight javascript library for making guided website tours</small></h1>
+		  <h1>Guides.js <small>lightweight javascript library for guided website tours</small></h1>
 		</div>
-		<p>Guides.js finds the element you want to highlight, creates a guide element using the html you specified in the configuration options and connects the guide and the highlighted element with an svg arrow.</p>
+		<p>Guides.js finds the element you want to highlight, creates a "tip" using the html you specified pointing to the highlighted element.</p>
 		<p><button type="button" class="demo btn btn-success">Start demo</button></p>
-		<p><img src="http://i.gyazo.com/c03b02c7bbc24b7e9bdb8e620df20cf7.png" class="img-thumbnail" /></p>
-		<h3 id="getting-started">Getting Started</h3>
+		<p><img src="./demo.png" width="400" class="img-thumbnail" /></p>
+		<h3 id="installation" style="background: #fff;">Installation</h3>
 		<section>
-		<p>Once you have downloaded the source, simply include <em>guides.css</em> in the <kbd>&lt;head&gt;</kbd> of your page:</p>
-		<p><pre>&lt;head&gt
-	...
-	&lt;link rel="stylesheet" type="text/css" href="guides.css" &gt;
-&lt;/head&gt</pre></p>
-		<p>and <em>guides.js</em> in your page scripts section. Make sure you include it after <em>jquery</em>:</p>
-		<p><pre>	...
-	&lt;script type="text/javascript" src="jquery.js" &gt;
-	&lt;script type="text/javascript" src="guides.js" &gt;
-&lt;/body&gt</pre></p>
-		<p>Note that you can import <em>guides.scss</em> and compile it togerther with your website styles if you are using sass.</p>
+			<p>
+				<pre><code class="language-shell">npm i guides</code></pre>
+			</p>
 		</section>
-		<h3 id="docs">Docs</h3>
+		<h3 id="usage" style="background: #fff;">Usage</h3>
 		<section>
-			<h4>Dependencies</h4>
-			<p><em>Guides.js</em> depends on <b>jquery</b>, so you need to make sure you include jquery first.</p>
-			<h4>Initialization</h4>
-			<p><em>Guides.js</em> is a jquery plugin and it can be initialized on an element, that will "trigger" the guided tour:</p>
-			<p><pre>
-$('#demo').guides({
+			<p><pre><code class="language-js">
+import Guides from 'guides';
+
+const tour = new Guides({
+	color: 'white',
+	distance: 100,
 	guides: [{
-		element: $('.navbar-brand'),
 		html: 'Welcome to Guides.js'
 	}, {
-		element: $('.navbar'),
+		element: document.querySelector('.navbar'),
 		html: 'Navigate through guides.js website'
 	}, {
-		element: $('#demo'),
+		element: document.querySelector('#demo'),
 		html: 'See how it works'
 	}, {
-		element: $('#download'),
+		element: document.querySelector('#download'),
 		html: 'Download guides.js'
 	}, {
-		element: $('#getting-started'),
+		element: document.querySelector('#installation'),
 		html: 'Check out how to get started with guides.js'
 	}, {
-		element: $('#docs'),
+		element: document.querySelector('#docs'),
 		html: 'Read the docs'
-	}]
-});</pre></p>
-			<p>Now the tour will start everytime <kbd>$('#demo')</kbd> element is clicked.</p>
-			<p>If you want to manually start the tour you can do the following:</p>
-			<p><pre>
-var guides = $.guides({
-	guides: [{
-			html: 'Welcome to Guides.js'
-		}, {
-			element: $('.navbar'),
-			html: 'Navigate through guides.js website'
-		}, {
-			element: $('#demo'),
-			html: 'See how it works'
-		}, {
-			element: $('#download'),
-			html: 'Download guides.js'
-		}, {
-			element: $('#getting-started'),
-			html: 'Check out how to get started with guides.js'
-		}, {
-			element: $('#docs'),
-			html: 'Read the docs'
-		}]
-	});
-guides.start();
-			</pre></p>
-			<h4>Configuration options</h4>
-			<h5>The default options are as follows:</h5>
-			<p><pre>
-{
-	distance: 100,
-	color: '#fffff',
-	guides: []
-}</pre></p>
-			<dl class="dl-horizontal">
-				<dt>distance</dt>
-				<dd><em>number</em> - distance between the guide text and the element that it is related to.</dd>
-				<dt>color</dt>
-				<dd><em>string</em> - arrows and text default color</dd>
-				<dt>guides</dt>
-				<dd><em>array of objects</em> - the list of guides</dd>
-			</dl>
-			<h5>The guides array</h5>
-			<p>A guide object looks like this:</p>
-<pre>{
-	element: $('.navbar-brand'),
-	html: 'Welcome to Guides.js',
-	color: '#fff'
-}</pre>
-			<dl class="dl-horizontal">
-				<dt>element</dt>
-				<dd><span class="label label-default">optional</span> <em>jquery element or string</em> - the element (or selector) you want to highlight; if omitted the guide will be centered</dd>
-				<dt>html</dt>
-				<dd><span class="label label-danger">required</span> <em>string</em> - this is the content of the tip: you can enter plain text or markup</dd>
-				<dt>color</dt>
-				<dd><span class="label label-default">optional</span> <em>string</em> - arrow and text color (falls back to the default color if not specified)</dd>
-				<dt>render</dt>
-				<dd><span class="label label-default">optional</span> <em>function</em> - a callback function that is called before guide is rendered</dd>
-			</dl>
-			<h4>Methods</h4>
-			<dl class="dl-horizontal">
-				<dt>start</dt>
-				<dd><kbd>$('#demo').guides('start');</kbd> Starts the guided tour.</dd>
-				<dt>end</dt>
-				<dd><kbd>$('#demo').guides('end');</kbd> Exits the guided tour.</dd>
-				<dt>next</dt>
-				<dd><kbd>$('#demo').guides('next');</kbd> Moves to the next guide.</dd>
-				<dt>prev</dt>
-				<dd><kbd>$('#demo').guides('prev');</kbd> Moves back to the previous guide.</dd>
-				<dt>destroy</dt>
-				<dd><kbd>$('#demo').guides('destroy');</kbd> Exits the guided tour and destroys it.</dd>
-				<dt>setOptions</dt>
-				<dd><kbd>$('#demo').guides('setOptions', options);</kbd> Extends the guides configuration options with the options sent as a second parameter.</dd>
-			</dl>
-			<h4>Events</h4>
-			<dl class="dl-horizontal">
-				<dt>start</dt>
-				<dd><kbd>$('#demo').guides({start: onStartFunction});</kbd> Called after the tour starts.</dd>
-				<dt>end</dt>
-				<dd><kbd>$('#demo').guides({end: onEndFunction});</kbd> Called after the tour ends.</dd>
-				<dt>next</dt>
-				<dd><kbd>$('#demo').guides({next: onNextFunction});</kbd> Called after showing the next guide.</dd>
-				<dt>prev</dt>
-				<dd><kbd>$('#demo').guides({prev: onPrevFunction});</kbd> Called after showing the previous guide.</dd>
-				<dt>render</dt>
-				<dd><kbd>$('#demo').guides({render: onRenderFunction});</kbd> Called before a guide is rendered.</dd>
-				<dt>destroy</dt>
-				<dd><kbd>$('#demo').guides({destroy: onDestroyFunction});</kbd> Called after destroying.</dd>
-			</dl>
+	}],
+	render: (event) => console.log(event),
+	start: (event) => console.log(event),
+	end: (event) => console.log(event),
+	next: (event) => console.log(event),
+	prev: (event) => console.log(event)
+});
+
+document.querySelectorAll('.demo').forEach((button) => {
+	button.addEventListener('click', () => tour.start());
+});
+			</code></pre></p>
+			<p>Now the tour will start everytime any of the <kbd>.demo</kbd> buttons are clicked.</p>
 		</section>
-		<h3 id="download">Download</h3>
+		<h3 id="configuration">Configuration</h3>
 		<section>
-			The source is availabe on github: <a href="https://github.com/epetrova/guides/">https://github.com/epetrova/guides/</a>:
-			<p><pre>git clone https://github.com/epetrova/guides.git</pre></p>
- 			Alternatively, you can install using Bower:
-			<p><pre>bower install guides</pre></p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Option Name</th>
+						<th></th>
+						<th>Type</th>
+						<th>Default Value</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>guides</code></td>
+						<td><span class="label label-danger">required</span></td>
+						<td>array</td>
+						<td></td>
+						<td>list of guides</td>
+					</tr>
+					<tr>
+						<td><code>distance</code></td>
+						<td><span class="label label-default">optional</span></td>
+						<td>number</td>
+						<td>100</td>
+						<td>distance between the tip and the highlighted element</td>
+					</tr>
+					<tr>
+						<td><code>color</code></th>
+						<td><span class="label label-default">optional</span></td>
+						<td>string</td>
+						<td>'#fff'</td>
+						<td>arrows and text color</td>
+					</tr>
+					<tr>
+						<td><code>start</code></th>
+						<td><span class="label label-default">optional</span></td>
+						<td>function</td>
+						<td></td>
+						<td>a callback function that is called when the tour starts</td>
+					</tr>
+					<tr>
+						<td><code>end</code></th>
+						<td><span class="label label-default">optional</span></td>
+						<td>function</td>
+						<td></td>
+						<td>a callback function that is called when the tour ends</td>
+					</tr>
+					<tr>
+						<td><code>next</code></th>
+						<td><span class="label label-default">optional</span></td>
+						<td>function</td>
+						<td></td>
+						<td>a callback function that is called after moving forward to the next tip</td>
+					</tr>
+					<tr>
+						<td><code>prev</code></th>
+						<td><span class="label label-default">optional</span></td>
+						<td>function</td>
+						<td></td>
+						<td>a callback function that is called after moving back to the previous tip</td>
+					</tr>
+					<tr>
+						<td><code>render</code></th>
+						<td><span class="label label-default">optional</span></td>
+						<td>function</td>
+						<td></td>
+						<td>a callback function that is called before guide is rendered</td>
+					</tr>
+				</tbody>
+			</table>
+			<h5>For each guide in the <code>guides</code> array you can specify the following options</h5>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Option Name</th>
+						<th></th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>html</code></td>
+						<td><span class="label label-danger">required</span></td>
+						<td>string</td>
+						<td>the tip's content - either plain text or markup</td>
+					</tr>
+					<tr>
+						<td><code>element</code></td>
+						<td><span class="label label-default">optional</span></td>
+						<td>DOM node</td>
+						<td>the element to highlight; if omitted the guide will be centered</td>
+					</tr>
+					<tr>
+						<td><code>color</code></th>
+						<td><span class="label label-default">optional</span></td>
+						<td>string</td>
+						<td>arrows and text color; if omitted the global one will be used</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<h3 id="methods">Methods</h3>
+		<section>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Method Name</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>start</code></td>
+						<td>starts the guided tour</td>
+					</tr>
+					<tr>
+						<td><code>end</code></td>
+						<td>exits the guided tour</td>
+					</tr>
+					<tr>
+						<td><code>next</code></td>
+						<td>moves to the next tip</td>
+					</tr>
+					<tr>
+						<td><code>prev</code></td>
+						<td>moves to the previous tip</td>
+					</tr>
+				</tbody>
+			</table>
 		</section>
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="./guides.min.js"></script>
+	<script src="https://unpkg.com/prismjs@1.22.0/prism.js"></script>
+	<script type="text/javascript" src="./index.js"></script>
 	<script type="text/javascript">
-		$('.demo').guides({
+		const guidedTour = new Guides({
 			guides: [{
 				html: 'Welcome to Guides.js'
 			}, {
-				element: $('.navbar'),
+				element: document.querySelector('.navbar'),
 				html: 'Navigate through guides.js website'
 			}, {
-				element: $('#demo'),
+				element: document.querySelector('#demo'),
 				html: 'See how it works'
 			}, {
-				element: $('#download'),
-				html: 'Download guides.js'
-			}, {
-				element: $('#getting-started'),
+				element: document.querySelector('#installation'),
 				html: 'Check out how to get started with guides.js'
 			}, {
-				element: $('#docs'),
-				html: 'Read the docs'
-			}]
+				element: document.querySelector('#configuration'),
+				html: 'Check out all configuration options'
+			}, {
+				element: document.querySelector('#methods'),
+				html: 'Check out all methods'
+			}],
+			render: (event) => {
+				if (event.guide && event.guide.element && event.guide.element.id === 'demo' && !event.guide.element.offsetParent) {
+					document.querySelector('.navbar-collapse').classList.add('in');
+					document.querySelector('.navbar-collapse').style.height = 'auto';
+				} else {
+					document.querySelector('.navbar-collapse').classList.remove('in');
+					document.querySelector('.navbar-collapse').style.height = '1px';
+				}
+			}
 		});
+
+		document.querySelectorAll('.demo').forEach(button => button.addEventListener('click', () => guidedTour.start()));
 	</script>
 </body>
 </html>
