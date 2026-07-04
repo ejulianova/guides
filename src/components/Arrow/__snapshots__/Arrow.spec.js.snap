@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Arrow when position is bottom renders the expected SVG arrow 1`] = `
+<svg
+  height="100"
+  overflow="visible"
+  width="300"
+>
+  
+      
+  <defs>
+    
+        
+    <marker
+      id="arrow"
+      markerHeight="13"
+      markerWidth="13"
+      orient="auto"
+      refX="2"
+      refY="6"
+    >
+      
+          
+      <path
+        d="M2,1 L2,10 L10,6 L2,2"
+        style="fill:#fff;"
+      />
+      
+        
+    </marker>
+    
+      
+  </defs>
+  
+      
+  <path
+    d="M0,100 C0,82,10,37.00000000000001,10,10"
+    id="line"
+    style="stroke:#fff; stroke-width: 1.25px; fill: none; marker-end: url(#arrow);"
+  />
+</svg>
+`;
+
+exports[`Arrow when position is left renders the expected SVG arrow 1`] = `
+<svg
+  height="100"
+  overflow="visible"
+  width="300"
+>
+  
+      
+  <defs>
+    
+        
+    <marker
+      id="arrow"
+      markerHeight="13"
+      markerWidth="13"
+      orient="auto"
+      refX="2"
+      refY="6"
+    >
+      
+          
+      <path
+        d="M2,1 L2,10 L10,6 L2,2"
+        style="fill:#fff;"
+      />
+      
+        
+    </marker>
+    
+      
+  </defs>
+  
+      
+  <path
+    d="M200,0 C227,0,263,10,290,10"
+    id="line"
+    style="stroke:#fff; stroke-width: 1.25px; fill: none; marker-end: url(#arrow);"
+  />
+</svg>
+`;
+
+exports[`Arrow when position is right renders the expected SVG arrow 1`] = `
+<svg
+  height="100"
+  overflow="visible"
+  width="300"
+>
+  
+      
+  <defs>
+    
+        
+    <marker
+      id="arrow"
+      markerHeight="13"
+      markerWidth="13"
+      orient="auto"
+      refX="2"
+      refY="6"
+    >
+      
+          
+      <path
+        d="M2,1 L2,10 L10,6 L2,2"
+        style="fill:#fff;"
+      />
+      
+        
+    </marker>
+    
+      
+  </defs>
+  
+      
+  <path
+    d="M100,0 C73,0,37.00000000000001,10,10,10"
+    id="line"
+    style="stroke:#fff; stroke-width: 1.25px; fill: none; marker-end: url(#arrow);"
+  />
+</svg>
+`;
+
+exports[`Arrow when position is top renders the expected SVG arrow 1`] = `
+<svg
+  height="100"
+  overflow="visible"
+  width="300"
+>
+  
+      
+  <defs>
+    
+        
+    <marker
+      id="arrow"
+      markerHeight="13"
+      markerWidth="13"
+      orient="auto"
+      refX="2"
+      refY="6"
+    >
+      
+          
+      <path
+        d="M2,1 L2,10 L10,6 L2,2"
+        style="fill:#fff;"
+      />
+      
+        
+    </marker>
+    
+      
+  </defs>
+  
+      
+  <path
+    d="M0,0 C0,18,10,62.99999999999999,10,90"
+    id="line"
+    style="stroke:#fff; stroke-width: 1.25px; fill: none; marker-end: url(#arrow);"
+  />
+</svg>
+`;
