@@ -12,7 +12,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write # required for npm provenance
+  id-token: write # required for npm provenance AND Trusted Publishing (OIDC auth)
 
 jobs:
   publish:
@@ -28,9 +28,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
+
+      # Trusted Publishing (OIDC) needs a recent npm CLI - the version bundled
+      # with actions/setup-node is often too old to support it.
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: npm ci
@@ -51,7 +56,8 @@ jobs:
           echo "- ref: \`${{ github.ref }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- commit: \`${{ github.sha }}\`" >> "$GITHUB_STEP_SUMMARY"
 
+      # Authenticates via npm Trusted Publishing (OIDC) - no token/secret needed.
+      # Requires a trusted publisher configured on the package at
+      # npmjs.com/package/guides/access, matching this exact repo + workflow file.
       - name: Publish to npm
         run: npm publish --tag ${{ inputs.npm-tag }} --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
