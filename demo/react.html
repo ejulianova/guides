@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>guides.js – React demo</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">guides.js</a>
+        <div class="nav-links">
+          <a href="index.html">Core demo</a>
+          <a href="react.html" aria-current="page">React demo</a>
+          <a href="#installation">Installation</a>
+          <a href="#usage">Usage</a>
+          <a href="#configuration">Configuration</a>
+          <a href="#methods">Methods</a>
+        </div>
+        <div id="root" class="nav-demo-root"></div>
+      </div>
+    </nav>
+
+    <main>
+      <header>
+        <h1>Guides.js – React</h1>
+        <small>GuidedTour component with smoothScroll</small>
+        <p>
+          This demo uses the <code>GuidedTour</code> React wrapper with
+          <code>smoothScroll</code> enabled. When a step targets an element
+          off-screen, the page scrolls smoothly and the tip is positioned only
+          after the scroll finishes.
+        </p>
+      </header>
+
+      <h3 id="installation">Installation</h3>
+      <section>
+        <pre><code class="language-shell">npm i guides</code></pre>
+      </section>
+      <h3 id="usage">Usage</h3>
+      <section>
+        <pre><code class="language-jsx">
+import GuidedTour from 'guides/react';
+
+&lt;GuidedTour
+  ref={tourRef}
+  guides={[
+    { html: 'Welcome!' },
+    { target: document.querySelector('header'), html: 'Header' }
+  ]}
+  smoothScroll
+  onStart={() => console.log('start')}
+  onEnd={() => console.log('end')}
+&gt;
+  {(tour) => (
+    &lt;button onClick={() => tour?.start()}&gt;Start Tour&lt;/button&gt;
+  )}
+&lt;/GuidedTour&gt;
+        </code></pre>
+      </section>
+      <h3 id="configuration">Configuration</h3>
+      <section>
+        <p>
+          <code>smoothScroll</code> can be set at the top level (for all
+          guides) or per guide. When enabled, the guide is positioned only
+          after the scroll animation completes.
+        </p>
+      </section>
+      <h3 id="methods">Methods</h3>
+      <section>
+        <p>Same as the core: <code>start()</code>, <code>end()</code>, <code>next()</code>, <code>prev()</code>.</p>
+      </section>
+      <footer>
+        <nav>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/ejulianova/guides"
+                title="View on GitHub"
+                class="contrast"
+                id="github-link"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24.25" viewBox="0 0 496 512" class="icon-github">
+                  <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </footer>
+    </main>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="./dist/react.js"></script>
+    <script src="./react-demo.js"></script>
+  </body>
+</html>

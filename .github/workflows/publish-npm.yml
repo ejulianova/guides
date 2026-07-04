@@ -1,0 +1,57 @@
+name: Publish to npm
+
+# Manual only — never runs on push or tag creation. npm publish is
+# effectively irreversible, so this is a deliberate, explicit action.
+on:
+  workflow_dispatch:
+    inputs:
+      npm-tag:
+        description: "npm dist-tag to publish under (latest, next, v1, ...)"
+        required: true
+        default: "latest"
+
+permissions:
+  contents: read
+  id-token: write # required for npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # Costs nothing if the "npm-publish" environment isn't configured.
+    # Add required reviewers under Settings > Environments for a second
+    # manual approval gate on top of the dispatch itself, if wanted later.
+    environment: npm-publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Record what's about to be published
+        run: |
+          echo "### Publishing guides@$(node -p "require('./package.json').version")" >> "$GITHUB_STEP_SUMMARY"
+          echo "- npm dist-tag: \`${{ inputs.npm-tag }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- ref: \`${{ github.ref }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- commit: \`${{ github.sha }}\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish to npm
+        run: npm publish --tag ${{ inputs.npm-tag }} --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
