@@ -27,18 +27,27 @@ curl -s "https://data.jsdelivr.com/v1/stats/packages/npm/guides?period=month"
 
 ## Publishing mechanics
 
-Publishing to npm is a manual, explicit action — [`.github/workflows/publish-npm.yml`](.github/workflows/publish-npm.yml) only runs on `workflow_dispatch`, never automatically on push or tag creation. It re-runs lint/test/build as a gate immediately before publishing, then `npm publish --provenance` using an `NPM_TOKEN` repo secret.
+Publishing to npm is a manual, explicit action — [`.github/workflows/publish-npm.yml`](.github/workflows/publish-npm.yml) only runs on `workflow_dispatch`, never automatically on push or tag creation. It re-runs lint/test/build as a gate immediately before publishing, then `npm publish --provenance`.
+
+Authentication is via npm **Trusted Publishing** (OIDC) — not a long-lived token. npm verifies the identity of the GitHub Actions run itself against a trust relationship configured on the package, so there's no `NPM_TOKEN` secret to create, store, or rotate. (An earlier attempt at this used a classic "Automation" token and hit `npm error code EOTP` — npmjs.com now steers CI use cases toward Trusted Publishing instead, which is what's set up here.)
 
 **One-time setup** (only you can do this):
-1. On npmjs.com, create an **Automation** token (Access Tokens → Generate New Token → Automation — this type bypasses 2FA prompts so it works non-interactively in CI).
-2. Add it as a repo secret named `NPM_TOKEN` (Settings → Secrets and variables → Actions → New repository secret).
+1. On npmjs.com: `npmjs.com/package/guides/access` → **Trusted Publishers** → add a new one:
+   - Provider: GitHub Actions
+   - Organization or user: `ejulianova`
+   - Repository: `guides`
+   - Workflow filename: `publish-npm.yml`
+   - Environment: `npm-publish` (matches the `environment:` set in the workflow)
+2. Nothing to add as a GitHub secret — there's no token in this flow.
 
 **To cut a release:**
-1. Locally: `npm run release` / `release:minor` / `release:major` — bumps `package.json`, commits, tags (e.g. `v2.0.1`), and pushes the commit + tag. This step does *not* publish anything; it's git-only, no npm token needed.
-2. On GitHub: Actions tab → "Publish to npm" → **Run workflow** → pick the branch/tag you just pushed (e.g. `v2.0.1`) and the npm dist-tag to publish under (`latest`, `next`, `v1`, ...) → Run.
+1. Locally: `npm run release` / `release:minor` / `release:major` — bumps `package.json`, commits, tags (e.g. `v2.0.1`), and pushes the commit + tag. This step does *not* publish anything; it's git-only.
+2. On GitHub: Actions tab → "Publish to npm" → **Run workflow** → pick the branch/tag you just pushed (e.g. `v2.0.1`) and the npm dist-tag to publish under (`latest`, `next`, `jquery`, ...) → Run.
 3. Check the workflow's job summary — it prints the exact version/tag/commit being published before the `npm publish` step runs, so you can catch a wrong branch/tag selection before it's irreversible.
 
 For the initial 2.0.0 release specifically, consider publishing under the `next` dist-tag first (`npm i guides@next` for early testers) before promoting to `latest`, given step 3 below is a breaking change for anyone on an unpinned install.
+
+Note: npm dist-tags can't be valid semver ranges (`v1` is rejected — it parses as a range meaning "1.x"). Use a non-numeric name like `jquery` instead (see step 2 of the rollout plan below).
 
 ## Rollout plan
 
@@ -46,9 +55,9 @@ For the initial 2.0.0 release specifically, consider publishing under the `next`
 
 2. **Pin an npm dist-tag to the last v1 release**, before publishing 2.0.0, so it's discoverable independent of what `latest` points to afterward:
    ```bash
-   npm dist-tag add guides@1.2.9 v1
+   npm dist-tag add guides@1.2.9 jquery
    ```
-   `npm i guides@v1` will then always resolve to the last jQuery release, regardless of how many major versions ship later.
+   (Not `v1` — npm rejects dist-tags that are valid semver ranges, and `v1` parses as one.) `npm i guides@jquery` will then always resolve to the last jQuery release, regardless of how many major versions ship later.
 
 3. **Publish 2.0.0 as `latest`** (via the "Publish to npm" Action, see above) only after step 2 is done.
 
@@ -59,3 +68,9 @@ For the initial 2.0.0 release specifically, consider publishing under the `next`
 5. **Don't run `npm deprecate` on the 1.x line immediately.** It prints a warning on every `npm install` for anyone still on that range, which fights the goal of letting people migrate on their own schedule. Hold off until a real migration window has passed (a few months), then deprecate with a message pointing at MIGRATION.md.
 
 6. **Document a support window for 1.x** (e.g. "critical/security fixes only through <date>") in the v2 CHANGELOG's breaking-change note, so it's a concrete commitment rather than an open-ended one.
+
+7. **Deprecate the `guides.js` duplicate package.** There's a second, accidental publish under the name `guides.js` (same author, same description) that stalled at version 1.2.0 and gets ~10x less usage than `guides` (23 vs. 213 downloads/month, checked 2026-07-04). Don't publish v2 there too — that just doubles the maintenance surface for a name almost nobody uses. Instead:
+   ```bash
+   npm deprecate guides.js "This package is unmaintained - the active package is now published as 'guides': https://www.npmjs.com/package/guides"
+   ```
+   (Note: `guide`, without the `.js`, is an unrelated package by a different author - not ours, don't touch it.)
